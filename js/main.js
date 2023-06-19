@@ -22,7 +22,7 @@ function createRandomUnique (min, max) {
   return function () {
     let currentValue = getRandomInteger(min, max);
     if (previousValues.length >= (max - min + 1)) {
-      console.error('Перебраны все числа из диапазона от ' + min + ' до ' + max);
+      window.console.error(`Перебраны все числа из диапазона от ${min} до ${max}`);
       return null;
     }
     while (previousValues.includes(currentValue)) {
@@ -53,5 +53,3 @@ const createPublication = () => ({
 });
 
 const similarPublication = Array.from({length: SIMILAR_PUBLICATION_COUNT}, createPublication);
-
-console.log(similarPublication);
