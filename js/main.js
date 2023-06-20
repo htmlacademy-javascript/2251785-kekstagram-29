@@ -22,7 +22,7 @@ function createRandomUnique (min, max) {
   return function () {
     let currentValue = getRandomInteger(min, max);
     if (previousValues.length >= (max - min + 1)) {
-      console.error(`Перебраны все числа из диапазона от ${min} до ${max}`);
+      console.error(`Перебраны все числа из диапазона от ${min} до ${max}`); // eslint-disable-line no-console
       return null;
     }
     while (previousValues.includes(currentValue)) {
@@ -44,12 +44,14 @@ const createPublication = () => ({
   url: `photos/${generatePhotoId()}.jpg`,
   description: 'Описание фотографии',
   likes: getRandomInteger(15, 200),
-  comments: {
-    id: generateCommentId(),
-    avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-    message: getRandomArrayElement(MESSAGES),
-    name: 'Пользователь',
-  }
+  comments: [
+    {id: generateCommentId()},
+    {avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`},
+    {message: getRandomArrayElement(MESSAGES)},
+    {name: 'Пользователь'},
+  ]
 });
 
 const similarPublication = Array.from({length: SIMILAR_PUBLICATION_COUNT}, createPublication);
+
+console.log (similarPublication); // eslint-disable-line no-console
