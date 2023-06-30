@@ -6,13 +6,13 @@ const container = document.querySelector('.pictures');
 
 const fragment = document.createDocumentFragment();
 
-const fillCardTemplate = (photoObj) => {
+const fillCardTemplate = ({url, description, likes, comments}) => {
   const temp = cardTemplate.cloneNode(true);
 
-  temp.querySelector('.picture__img').src = photoObj.url;
-  temp.querySelector('.picture__img').alt = photoObj.description;
-  cardTemplate.querySelector('.picture__likes').textContent = photoObj.likes;
-  cardTemplate.querySelector('.picture__comments').textContent = photoObj.comments.length;
+  temp.querySelector('.picture__img').src = url;
+  temp.querySelector('.picture__img').alt = description;
+  temp.querySelector('.picture__likes').textContent = likes;
+  temp.querySelector('.picture__comments').textContent = comments.length;
 
   return temp;
 };
