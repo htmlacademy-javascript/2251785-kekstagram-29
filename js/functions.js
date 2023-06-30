@@ -54,11 +54,7 @@ const timeCheck = (startWork, endWork, startMeeting, durationMeeting) => {
   endWork[0] = parse(endWork[0]);
   endWork[1] = parse(endWork[1]);
 
-  if (endMeeting[0] > endWork[0] || endMeeting[0] < startWork[0]) {
-    return 'false';
-  } else {
-    return 'true';
-  }
+  return endMeeting[0] <= endWork[0] || endMeeting[0] >= startWork[0];
 };
 
 console.log(timeCheck('08:00', '17:30', '14:00', 90)); // true

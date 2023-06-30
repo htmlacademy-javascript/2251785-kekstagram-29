@@ -8,7 +8,6 @@ const MESSAGES = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
-const SIMILAR_PUBLICATION_COUNT = 25;
 
 const generatePostId = createRandomUnique(1, 25);
 const generatePhotoId = createRandomUnique(1, 25);
@@ -38,6 +37,6 @@ const createPublication = () => ({
   comments: randomComments(),
 });
 
-const similarPublication = Array.from({length: SIMILAR_PUBLICATION_COUNT}, createPublication);
+const publicationsData = (param) => Array.from({length: param}, createPublication);
 
-export {similarPublication };
+export {publicationsData};

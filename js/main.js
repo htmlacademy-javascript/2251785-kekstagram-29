@@ -1,3 +1,4 @@
-import {similarPublication } from './data.js';
+import {publicationsData} from './data.js';
+import {renderPictures} from './pictures.js';
 
-console.log (similarPublication); // eslint-disable-line no-console
+renderPictures(publicationsData(25));
