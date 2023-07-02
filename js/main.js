@@ -1,4 +1,5 @@
-import {publicationsData} from './data.js';
-import {renderPictures} from './pictures.js';
+import './gallery.js';
+import './fullscreen.js';
 
-renderPictures(publicationsData(25));
+import './gallery.js';
+import './fullscreen.js';

@@ -17,7 +17,7 @@ const fillCardTemplate = ({url, description, likes, comments}) => {
   return temp;
 };
 
-export const renderPictures = (data) => {
+export const renderThumbnails = (data) => {
   data.forEach((cardObj) => {
     fragment.appendChild(fillCardTemplate(cardObj));
   });
