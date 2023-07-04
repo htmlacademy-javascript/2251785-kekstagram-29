@@ -24,7 +24,7 @@ thumbnails.forEach((thumbnail) => {
     commentsLoader.classList.add('hidden');
 
     for (let i = 0; i < thumbnailsData.length; i++) {
-      if (thumbnail.querySelector('.picture__img').src === `http://localhost:3000/${thumbnailsData[i].url}`) { //Проверяю по ссылке на изображение
+      if (thumbnail.dataset.id === thumbnailsData[i].id.toString()) { //Проверяю по ссылке на изображение
         picture.src = thumbnailsData[i].url;
         likes.textContent = thumbnailsData[i].likes;
         comments.textContent = thumbnailsData[i].comments.length;
@@ -42,14 +42,17 @@ thumbnails.forEach((thumbnail) => {
   });
 });
 
-buttonExit.addEventListener('click', () => {
+const modalClose = () => {
   modalPicture.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
+};
+
+buttonExit.addEventListener('click', () => {
+  modalClose();
 });
 
 document.addEventListener('keydown', (evt) => {
   if (evt.key === 'Escape') {
-    modalPicture.classList.add('hidden');
-    document.querySelector('body').classList.remove('modal-open');
+    modalClose();
   }
 });
