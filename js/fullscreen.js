@@ -24,7 +24,7 @@ thumbnails.forEach((thumbnail) => {
     commentsLoader.classList.add('hidden');
 
     for (let i = 0; i < thumbnailsData.length; i++) {
-      if (thumbnail.dataset.id === thumbnailsData[i].id.toString()) { //Проверяю по ссылке на изображение
+      if (thumbnail.dataset.id === thumbnailsData[i].id.toString()) {
         picture.src = thumbnailsData[i].url;
         likes.textContent = thumbnailsData[i].likes;
         comments.textContent = thumbnailsData[i].comments.length;
