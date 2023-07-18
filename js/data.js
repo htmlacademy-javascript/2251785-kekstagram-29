@@ -1,42 +1,67 @@
-import {getRandomInteger, createRandomUnique, getRandomArrayElement} from './util.js';
+import {getRandomInteger, getRandomArrayElement, createIdGenerator} from './utils.js';
+
+// Описание фотографий
+
+const DESCRIPTIONS = [
+  'Да, да! В это зеркало я буду фоткаться до тех пор, пока не состарюсь.',
+  'Чтобы достичь новых берегов, мы должны плыть, а не дрейфовать.',
+  'Икона стиля районного масштаба.',
+  'Водка может и не быть ответом, но попробовать стоит.',
+  'С прекрасной девушкой приходят большие расходы.',
+  'Я иду медленно, но не назад.'
+];
+
+// Текст комментариев
 
 const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.',
+  'В конце концов это просто непрофессионально.',
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
+  'Лица у людей на фотке перекошены, как будто их избивают.',
+  'Как можно было поймать такой неудачный момент?!',
 ];
 
-const generatePostId = createRandomUnique(1, 25);
-const generatePhotoId = createRandomUnique(1, 25);
-const generateCommentId = createRandomUnique(1, 10000);
+// Имена авторов
 
-const randomComments = () => {
-  const randomQuantity = getRandomInteger(0, 30);
-  const comments = [];
-  for (let i = 0; i < randomQuantity; i++) {
-    const comment = {
-      id: generateCommentId(),
-      avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-      message: getRandomArrayElement(MESSAGES),
-      name: 'Пользователь',
-    };
-    comments.push(comment);
-  }
+const NAMES = [
+  'Ибрагим',
+  'Олег',
+  'Зинаида',
+  'Всеволод',
+  'Анджела',
+  'Дина'
+];
 
-  return comments;
-};
+// Необходимое количество сгенерированных объектов
 
-const createPublication = () => ({
-  id: generatePostId(),
-  url: `photos/${generatePhotoId()}.jpg`,
-  description: 'Описание фотографии',
-  likes: getRandomInteger(15, 200),
-  comments: randomComments(),
+const SIMILAR_PHOTO_COUNT = 25;
+const SIMILAR_COMMENT_COUNT = 30;
+const AVATAR_MAX_COUNT = 6;
+const LIKES_MIN_COUNT = 15;
+const LIKES_MAX_COUNT = 200;
+
+const generateCommentId = createIdGenerator();
+
+const comment = () => ({
+  id: generateCommentId(),
+  avatar: `img/avatar-${getRandomInteger(1, AVATAR_MAX_COUNT)}.svg`,
+  message: getRandomArrayElement(MESSAGES),
+  name: getRandomArrayElement(NAMES)
 });
 
-const publicationsData = (param) => Array.from({length: param}, createPublication);
+const createPhotos = (index) => ({
+  id: index,
+  url: `photos/${index}.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS),
+  likes: getRandomInteger(LIKES_MIN_COUNT, LIKES_MAX_COUNT),
+  comments: Array.from({length: getRandomInteger(0, SIMILAR_COMMENT_COUNT)}, comment)
+});
 
-export {publicationsData};
+const similarPhotos = () => Array.from({length: SIMILAR_PHOTO_COUNT}, (_, index) => createPhotos(index + 1));
+
+const data = similarPhotos();
+
+export { data };
