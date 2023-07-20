@@ -27,7 +27,6 @@ const createSlider = (slider) => {
   });
   sliderContainer.classList.add('hidden');
 };
-
 createSlider(sliderElement);
 
 smaller.addEventListener('click', () => {
@@ -50,12 +49,6 @@ items.forEach((item) => {
   item.addEventListener('change', effects);
 });
 
-const reset = () => {
-  sliderContainer.classList.remove('hidden');
-  valueScale.value = '100%';
-  image.style.cssText = 'transform: scale(1); filter: none';
-};
-
 const updateOptions = (min, max, start, step) => {
   sliderElement.noUiSlider.updateOptions({
     range: {
@@ -76,51 +69,63 @@ const sliderListener = (effect) => {
   });
 };
 
+const resetDefault = () => {
+  sliderContainer.classList.add('hidden');
+  valueScale.value = '100%';
+  image.style.cssText = 'transform: scale(1); filter: none';
+};
+
+const resetEffects = () => {
+  sliderContainer.classList.remove('hidden');
+  valueScale.value = '100%';
+  image.style.cssText = 'transform: scale(1); filter: none';
+};
+
 function effects() {
   switch(true) {
     case chrome.checked: {
-      reset();
+      resetEffects();
       updateOptions(0, 1, 1, 0.1);
       sliderListener('grayscale');
       break;
     }
     case sepia.checked: {
-      reset();
+      resetEffects();
       updateOptions(0, 1, 1, 0.1);
       sliderListener('sepia');
       break;
     }
     case marvin.checked: {
-      reset();
+      resetEffects();
       updateOptions(0, 100, 100, 1);
       sliderElement.noUiSlider.on('update', () => {
-        valueElement.value = sliderElement.noUiSlider.get(); //Запись данных в скрытое поле
+        valueElement.value = sliderElement.noUiSlider.get();
 
         image.style.cssText += `filter: invert(${sliderElement.noUiSlider.get()}%)`;
       });
       break;
     }
     case phobos.checked: {
-      reset();
+      resetEffects();
       updateOptions(0, 3, 3, 0.1);
       sliderElement.noUiSlider.on('update', () => {
-        valueElement.value = sliderElement.noUiSlider.get(); //Запись данных в скрытое поле
+        valueElement.value = sliderElement.noUiSlider.get();
 
         image.style.cssText += `filter: blur(${sliderElement.noUiSlider.get()}px)`;
       });
       break;
     }
     case heat.checked: {
-      reset();
+      resetEffects();
       updateOptions(1, 3, 3, 0.1);
       sliderListener('brightness');
       break;
     }
     default: {
-      sliderContainer.classList.add('hidden');
-      valueScale.value = '100%';
-      image.style.cssText = 'transform: scale(1); filter: none';
+      resetDefault();
       break;
     }
   }
 }
+
+export { resetDefault };
