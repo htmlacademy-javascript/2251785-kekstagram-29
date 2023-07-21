@@ -65,7 +65,7 @@ const sliderListener = (effect) => {
   sliderElement.noUiSlider.on('update', () => {
     valueElement.value = sliderElement.noUiSlider.get(); //Запись данных в скрытое поле
 
-    image.style.cssText += `filter: ${effect}(${sliderElement.noUiSlider.get()})`;
+    image.style.cssText += `filter: ${effect}(${sliderElement.noUiSlider.get()}); transform: scale(${parseInt(valueScale.value, 10) / 100});`;
   });
 };
 
@@ -77,8 +77,7 @@ const resetDefault = () => {
 
 const resetEffects = () => {
   sliderContainer.classList.remove('hidden');
-  valueScale.value = '100%';
-  image.style.cssText = 'transform: scale(1); filter: none';
+  image.style.cssText = 'filter: none';
 };
 
 function effects() {

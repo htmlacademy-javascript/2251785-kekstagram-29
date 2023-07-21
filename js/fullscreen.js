@@ -8,7 +8,8 @@ const bigPicture = document.querySelector('.big-picture');
 const bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
 const picturesContainer = document.querySelector('.pictures');
 const socialComments = bigPicture.querySelector('.social__comments');
-const commentCount = document.querySelector('.social__comment-count');
+const similiarCommentsCount = document.querySelector('.similiar-comments-count');
+const allCommentsCount = document.querySelector('.comments-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const bodyElement = document.querySelector('body');
 
@@ -65,8 +66,8 @@ function renderComments(comments) {
 }
 
 function reviewComments(shownComments, allСomments) {
-  commentCount.innerHTML = `${shownComments} из ${allСomments} комментариев`;
-
+  allCommentsCount.innerHTML = allСomments;
+  similiarCommentsCount.innerHTML = shownComments;
   if (shownComments === allСomments) {
     commentsLoader.classList.add('hidden');
   } else {

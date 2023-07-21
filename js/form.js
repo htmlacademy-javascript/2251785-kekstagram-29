@@ -1,6 +1,6 @@
 import { isEscapeKey } from './utils.js';
 import { resetDefault } from './photo-editor.js';
-import { messageCreate, messageOpen } from './message-status.js';
+import { messageOpen } from './message-status.js';
 import { sendData } from './api.js';
 
 const body = document.querySelector('body');
@@ -25,8 +25,9 @@ const pristine = new Pristine(form, {
 }, false);
 
 const onDocumentKeydown = (evt) => {
+  const message = body.querySelector('.error');
   const messageError = body.querySelector('.error.hidden');
-  if (isEscapeKey(evt) && (document.activeElement !== hastags && document.activeElement !== description) && messageError !== null) {
+  if (isEscapeKey(evt) && (document.activeElement !== hastags && document.activeElement !== description) && (messageError !== null || message === null)) {
     evt.preventDefault();
     formClose();
   }
@@ -70,8 +71,17 @@ photoButton.addEventListener('change', formOpen);
 
 function validateHashtag (value) {
   let valid = true;
-  if (value !== '') {
-    const arrayHashtags = value.trim().split(' ');
+  const newValue = value.split(' ');
+  const arrayHashtags = newValue.reduce((accumulator, currentValue) => {
+    const item = currentValue.trim();
+
+    if (item !== '') {
+      accumulator.push(item);
+    }
+
+    return accumulator;
+  }, []);
+  if (arrayHashtags.length !== 0) {
     arrayHashtags.forEach((hashtag) => {
       if (!hashtagValidate.test(hashtag)) {
         valid = false;
@@ -82,13 +92,38 @@ function validateHashtag (value) {
 }
 
 function countHashtag (value) {
-  const arrayHashtags = value.trim().split(' ');
+  const newValue = value.split(' ');
+  const arrayHashtags = newValue.reduce((accumulator, currentValue) => {
+    const item = currentValue.trim();
+
+    if (item !== '') {
+      accumulator.push(item);
+    }
+
+    return accumulator;
+  }, []);
   return arrayHashtags.length <= 5;
 }
 
 function uniqueHashtag (value) {
-  const arrayHashtags = value.trim().split(' ');
+  const newValue = value.toLowerCase().split(' ');
+  const arrayHashtags = newValue.reduce((accumulator, currentValue) => {
+    const item = currentValue.trim();
+
+    if (item !== '') {
+      accumulator.push(item);
+    }
+
+    return accumulator;
+  }, []);
   return (new Set(arrayHashtags)).size === arrayHashtags.length;
+}
+
+function countSymbols(value) {
+  if (value.length > 140) {
+    return false;
+  }
+  return true;
 }
 
 pristine.addValidator(hastags, validateHashtag, 'Введён невалидный хэш-тег');
@@ -97,11 +132,12 @@ pristine.addValidator(hastags, countHashtag, 'Превышено количес�
 
 pristine.addValidator(hastags, uniqueHashtag, 'Хэш-теги повторяются');
 
-messageCreate('success');
-messageCreate('error');
+pristine.addValidator(description, countSymbols, 'Сообщение превышает 140 символов');
+
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
+    pristine.reset();
     blockButtonSubmit();
     const formData = new FormData(form);
     sendData(formData)
