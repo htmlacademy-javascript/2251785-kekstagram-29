@@ -1,25 +1,24 @@
-const cardTemplate = document
-  .querySelector('#picture')
-  .content.querySelector('.picture');
+const picturesContainer = document.querySelector('.pictures');
+const picturesTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const container = document.querySelector('.pictures');
+const createCard = (({id, url, description, likes, comments}) => {
+  const card = picturesTemplate.cloneNode(true);
+  card.dataset.id = id;
+  card.querySelector('.picture__img').src = url;
+  card.querySelector('.picture__comments').textContent = comments.length;
+  card.querySelector('.picture__img').alt = description;
+  card.querySelector('.picture__likes').textContent = likes;
 
-const fragment = document.createDocumentFragment();
+  return card;
+});
 
-const fillCardTemplate = ({url, description, likes, comments}) => {
-  const temp = cardTemplate.cloneNode(true);
-
-  temp.querySelector('.picture__img').src = url;
-  temp.querySelector('.picture__img').alt = description;
-  temp.querySelector('.picture__likes').textContent = likes;
-  temp.querySelector('.picture__comments').textContent = comments.length;
-
-  return temp;
-};
-
-export const renderPictures = (data) => {
-  data.forEach((cardObj) => {
-    fragment.appendChild(fillCardTemplate(cardObj));
+const renderPictures = (pictures) => {
+  const fragment = document.createDocumentFragment();
+  pictures.forEach((picture) => {
+    const card = createCard(picture);
+    fragment.appendChild(card);
   });
-  container.appendChild(fragment);
+  picturesContainer.appendChild(fragment);
 };
+
+export { renderPictures };
