@@ -673,6 +673,10 @@ main {
  * Блок добавления хэштегов и комментария к изображению
  */
 
+.img-upload__field-wrapper {
+  margin-bottom: 20px;
+}
+
 .text {
   margin: 0;
   padding: 0;
@@ -686,7 +690,6 @@ main {
   width: 450px;
 
   margin: 0 auto;
-  margin-bottom: 20px;
   padding: 5px 10px;
 
   font-family: "Open Sans", "Arial", sans-serif;
