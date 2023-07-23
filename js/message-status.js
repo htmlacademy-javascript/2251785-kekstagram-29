@@ -1,6 +1,5 @@
 import { isEscapeKey } from './utils.js';
 import { formClose } from './form.js';
-import { resetDefault } from './photo-editor.js';
 
 const body = document.querySelector('body');
 
@@ -13,7 +12,16 @@ function messageCreate(status) {
   message.classList.add('hidden');
 }
 
+function messageDelete(status) {
+  const message = body.querySelector(`.${status}`);
+  message.remove();
+}
+
 function messageOpen(status) {
+  if (status === 'success') {
+    formClose();
+  }
+  messageCreate(status);
   const modal = body.querySelector(`.${status}__inner`);
   const message = body.querySelector(`.${status}`);
   message.classList.remove('hidden');
@@ -41,15 +49,11 @@ function messageOpen(status) {
   message.addEventListener('click', onModalCloseClick);
 
   function messageClose () {
-    message.classList.add('hidden');
+    messageDelete(status);
     document.removeEventListener('keydown', onDocumentKeydown);
     message.querySelector(`.${status}__button`).removeEventListener('click', onMessageCloseClick);
     message.removeEventListener('click', onModalCloseClick);
-    if (status === 'success') {
-      resetDefault();
-      formClose();
-    }
   }
 }
 
-export { messageCreate, messageOpen };
+export { messageOpen };
