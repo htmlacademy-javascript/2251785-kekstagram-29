@@ -1,6 +1,6 @@
 import './pictures.js';
 import { isEscapeKey } from './utils.js';
-import { data } from './data.js';
+import { dataPhotos } from './load.js';
 
 const COMMENTS_IN_SECTION = 5;
 
@@ -48,7 +48,7 @@ const onPicturesContainerClick = ({ target }) => {
     return;
   }
   const cardDataId = target.closest('.picture').dataset.id;
-  const photoData = data.find((element) => element.id === Number(cardDataId));
+  const photoData = dataPhotos.find((element) => element.id === Number(cardDataId));
   fillBigPicture(photoData);
   openBigPicture();
 };
