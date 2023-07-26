@@ -60,7 +60,7 @@ const updateOptions = (min, max, start, step) => {
   });
 };
 
-const sliderListener = (effect) => {
+const sliderUpdate = (effect) => {
   sliderContainer.classList.remove('hidden');
   sliderElement.noUiSlider.on('update', () => {
     valueElement.value = sliderElement.noUiSlider.get(); //Запись данных в скрытое поле
@@ -85,13 +85,13 @@ function effects() {
     case chrome.checked: {
       resetEffects();
       updateOptions(0, 1, 1, 0.1);
-      sliderListener('grayscale');
+      sliderUpdate('grayscale');
       break;
     }
     case sepia.checked: {
       resetEffects();
       updateOptions(0, 1, 1, 0.1);
-      sliderListener('sepia');
+      sliderUpdate('sepia');
       break;
     }
     case marvin.checked: {
@@ -117,7 +117,7 @@ function effects() {
     case heat.checked: {
       resetEffects();
       updateOptions(1, 3, 3, 0.1);
-      sliderListener('brightness');
+      sliderUpdate('brightness');
       break;
     }
     default: {

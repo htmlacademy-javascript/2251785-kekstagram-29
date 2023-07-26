@@ -3,21 +3,21 @@ import { formClose } from './form.js';
 
 const body = document.querySelector('body');
 
-function messageCreate(status) {
+const messageCreate = (status) => {
   const messageElement = document.querySelector(`#${status}`).content.querySelector(`.${status}`);
   const messageClone = messageElement.cloneNode(true);
   body.appendChild(messageClone);
 
   const message = body.querySelector(`.${status}`);
   message.classList.add('hidden');
-}
+};
 
-function messageDelete(status) {
+const messageDelete = (status) => {
   const message = body.querySelector(`.${status}`);
   message.remove();
-}
+};
 
-function messageOpen(status) {
+const messageOpen = (status) => {
   if (status === 'success') {
     formClose();
   }
@@ -54,6 +54,6 @@ function messageOpen(status) {
     message.querySelector(`.${status}__button`).removeEventListener('click', onMessageCloseClick);
     message.removeEventListener('click', onModalCloseClick);
   }
-}
+};
 
 export { messageOpen };

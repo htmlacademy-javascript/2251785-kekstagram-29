@@ -26,14 +26,14 @@ const onBigPictureCloseClick = () => {
   closeBigPicture();
 };
 
-function openBigPicture() {
+const openBigPicture = () => {
   bigPicture.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
   bigPictureClose.addEventListener('click', onBigPictureCloseClick);
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
-}
+};
 
 function closeBigPicture() {
   bigPicture.classList.add('hidden');
@@ -61,11 +61,11 @@ function createComment({avatar, name, message}) {
     </li>`;
 }
 
-function renderComments(comments) {
+const renderComments = (comments) => {
   socialComments.innerHTML = comments.map((el) => createComment(el)).join('');
-}
+};
 
-function reviewComments(shownComments, allСomments) {
+const reviewComments = (shownComments, allСomments) => {
   allCommentsCount.innerHTML = allСomments;
   similiarCommentsCount.innerHTML = shownComments;
   if (shownComments === allСomments) {
@@ -73,7 +73,7 @@ function reviewComments(shownComments, allСomments) {
   } else {
     commentsLoader.classList.remove('hidden');
   }
-}
+};
 
 function onCommentsLoaderClick() {
   step = step + 1;
