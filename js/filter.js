@@ -3,60 +3,60 @@ import { dataPhotos } from './load.js';
 import { shuffle, debounce } from './utils.js';
 
 const filter = document.querySelector('.img-filters');
-const buttonDefault = filter.querySelector('#filter-default');
-const buttonRandom = filter.querySelector('#filter-random');
-const buttonDiscussed = filter.querySelector('#filter-discussed');
+const filterDefault = filter.querySelector('#filter-default');
+const filterRandom = filter.querySelector('#filter-random');
+const filterDiscussed = filter.querySelector('#filter-discussed');
 
 const picturesContainer = document.querySelector('section.pictures');
 
-function resetPictures() {
+const resetPictures = () => {
   const pictures = picturesContainer.querySelectorAll('.picture');
   pictures.forEach((picture) => {
     picture.remove();
   });
-}
+};
 
 const removeClassButton = (btn) => btn.classList.remove('img-filters__button--active');
 
-const changeClassDefault = () => {
-  removeClassButton(buttonRandom);
-  removeClassButton(buttonDiscussed);
-  buttonDefault.classList.add('img-filters__button--active');
+const onDefaultChange = () => {
+  removeClassButton(filterRandom);
+  removeClassButton(filterDiscussed);
+  filterDefault.classList.add('img-filters__button--active');
 };
 
-const changeClassRandom = () => {
-  removeClassButton(buttonDefault);
-  removeClassButton(buttonDiscussed);
-  buttonRandom.classList.add('img-filters__button--active');
+const onRandomChange = () => {
+  removeClassButton(filterDefault);
+  removeClassButton(filterDiscussed);
+  filterRandom.classList.add('img-filters__button--active');
 };
 
-const changeClassDiscussed = () => {
-  removeClassButton(buttonDefault);
-  removeClassButton(buttonRandom);
-  buttonDiscussed.classList.add('img-filters__button--active');
+const onDiscussedChange = () => {
+  removeClassButton(filterDefault);
+  removeClassButton(filterRandom);
+  filterDiscussed.classList.add('img-filters__button--active');
 };
 
-function onButtonDefaultClick() {
+const onButtonDefaultClick = () => {
   resetPictures();
   renderPictures(dataPhotos);
-}
+};
 
-function onButtonRandomClick() {
+const onButtonRandomClick = () => {
   resetPictures();
   let newArray = dataPhotos.slice();
   newArray = shuffle(newArray);
   renderPictures(newArray.slice(0, 10));
-}
+};
 
-function onButtonDiscussedClick() {
+const onButtonDiscussedClick = () => {
   resetPictures();
   const newArray = dataPhotos.slice();
   newArray.sort((a, b) => b.comments.length - a.comments.length);
   renderPictures(newArray);
-}
+};
 
-buttonDefault.addEventListener('click', debounce(onButtonDefaultClick));
-buttonRandom.addEventListener('click', debounce(onButtonRandomClick));
-buttonDiscussed.addEventListener('click', debounce(onButtonDiscussedClick));
+filterDefault.addEventListener('click', debounce(onButtonDefaultClick));
+filterRandom.addEventListener('click', debounce(onButtonRandomClick));
+filterDiscussed.addEventListener('click', debounce(onButtonDiscussedClick));
 
-export { changeClassDefault, changeClassRandom, changeClassDiscussed };
+export { onDefaultChange, onRandomChange, onDiscussedChange };

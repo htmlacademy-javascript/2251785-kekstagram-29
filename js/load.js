@@ -1,11 +1,11 @@
 import { renderPictures } from './pictures.js';
 import { getData } from './api.js';
-import { changeClassDefault, changeClassRandom, changeClassDiscussed } from './filter.js';
+import { onDefaultChange, onRandomChange, onDiscussedChange } from './filter.js';
 
 const filter = document.querySelector('.img-filters');
-const buttonDefault = filter.querySelector('#filter-default');
-const buttonRandom = filter.querySelector('#filter-random');
-const buttonDiscussed = filter.querySelector('#filter-discussed');
+const filterDefault = filter.querySelector('#filter-default');
+const filterRandom = filter.querySelector('#filter-random');
+const filterDiscussed = filter.querySelector('#filter-discussed');
 
 let dataPhotos = null;
 
@@ -20,8 +20,8 @@ getData()
   // eslint-disable-next-line no-alert
   .catch(() => alert('Не удалось загрузить данные. Попробуйте обновить страницу'));
 
-buttonDefault.addEventListener('click', changeClassDefault);
-buttonRandom.addEventListener('click', changeClassRandom);
-buttonDiscussed.addEventListener('click', changeClassDiscussed);
+filterDefault.addEventListener('click', onDefaultChange);
+filterRandom.addEventListener('click', onRandomChange);
+filterDiscussed.addEventListener('click', onDiscussedChange);
 
 export { dataPhotos };

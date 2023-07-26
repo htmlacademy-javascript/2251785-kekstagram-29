@@ -37,13 +37,13 @@ const onFormCloseClick = () => {
   formClose();
 };
 
-function formOpen () {
+const onFormOpen = () => {
   newPhoto.classList.remove('hidden');
   body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
   buttonClose.addEventListener('click', onFormCloseClick);
-}
+};
 
 function formClose () {
   form.reset();
@@ -59,17 +59,17 @@ function formClose () {
   buttonClose.removeEventListener('click', onFormCloseClick);
 }
 
-function blockButtonSubmit() {
+const blockButtonSubmit = () => {
   buttonSubmit.disabled = true;
-}
+};
 
-function unblockButtonSubmit() {
+const unblockButtonSubmit = () => {
   buttonSubmit.disabled = false;
-}
+};
 
-photoButton.addEventListener('change', formOpen);
+photoButton.addEventListener('change', onFormOpen);
 
-function validateHashtag (value) {
+const validateHashtag = (value) => {
   let valid = true;
   const newValue = value.split(' ');
   const arrayHashtags = newValue.reduce((accumulator, currentValue) => {
@@ -89,9 +89,9 @@ function validateHashtag (value) {
     });
   }
   return valid;
-}
+};
 
-function countHashtag (value) {
+const countHashtag = (value) => {
   const newValue = value.split(' ');
   const arrayHashtags = newValue.reduce((accumulator, currentValue) => {
     const item = currentValue.trim();
@@ -103,9 +103,9 @@ function countHashtag (value) {
     return accumulator;
   }, []);
   return arrayHashtags.length <= 5;
-}
+};
 
-function uniqueHashtag (value) {
+const uniqueHashtag = (value) => {
   const newValue = value.toLowerCase().split(' ');
   const arrayHashtags = newValue.reduce((accumulator, currentValue) => {
     const item = currentValue.trim();
@@ -117,14 +117,9 @@ function uniqueHashtag (value) {
     return accumulator;
   }, []);
   return (new Set(arrayHashtags)).size === arrayHashtags.length;
-}
+};
 
-function countSymbols(value) {
-  if (value.length > 140) {
-    return false;
-  }
-  return true;
-}
+const countSymbols = (value) => value.length <= 140;
 
 pristine.addValidator(hastags, validateHashtag, 'Введён невалидный хэш-тег');
 
